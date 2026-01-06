@@ -41,7 +41,7 @@ void printutf8(int _x, int _y, char *c)
     int i, j, k;
     ft.setFontSize(EXFONT16);
     int n;
-    uint16_t pUTF16[250];
+    uint16_t pUTF16[256];
     n = exfonts::Utf8ToUtf16(pUTF16, c);  // UTF8からUTF16に変換する
     x = _x;
     off = 0;
