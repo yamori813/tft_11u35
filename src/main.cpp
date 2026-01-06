@@ -31,7 +31,7 @@ void puthex(int n)
 void bitdisp(uint8_t d) {
   for (byte i=0; i<8;i++) {
     if (d & 0x80>>i) 
-      TFT.pixel(x + off, y, 0xffffff);
+      TFT.pixel(x + off, y, White);
     ++x;
   }
 }
