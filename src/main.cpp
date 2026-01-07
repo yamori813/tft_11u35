@@ -13,7 +13,7 @@ S6D0151_TFT TFT(P0_9, NC, P0_10, P0_2, P0_11, "TFT"); // mosi, miso, sclk, cs, r
 SPI_MX25R spi_mem(P0_21, P0_22, P1_15, P1_19);
 exfonts ft;
 
-MODSERIAL USART(P0_19, P0_18);   // Pin 32, 31
+MODSERIAL USART(P0_19, P0_18, 512);   // Pin 32, 31
 
 int x = 0;
 int y = 0;
@@ -36,7 +36,7 @@ void bitdisp(uint8_t d) {
   }
 }
 
-void printutf8(int _x, int _y, char *c)
+int printutf8(int _x, int _y, char *c)
 {
     int i, j, k;
     ft.setFontSize(EXFONT16);
@@ -68,10 +68,14 @@ void printutf8(int _x, int _y, char *c)
             ++line;
         }
     }
+
+    return line + 1;
 }
  
 int main() {
     int i, j;
+    char title[128];
+    char artist[128];
 
     USART.baud(115200);
 
@@ -111,10 +115,24 @@ int main() {
         ch = USART.getc();
         if (ch == '\n') {
             buf[n] = 0;
-            TFT.cls();
             if (strncmp(buf, "ICY-META:", 9) == 0) {
-               buf[n - 3] = 0;
-               printutf8(5, 30, buf + 23);
+                TFT.cls();
+                buf[n - 3] = 0;
+                printutf8(5, 30, buf + 23);
+            } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // id3v2
+                buf[n - 1] = 0;
+                strcpy(title, buf + 10);
+            } else if (strncmp(buf + 1, "Artist:", 7) == 0) {   // id3v2
+                buf[n - 1] = 0;
+                strcpy(artist, buf + 10);
+            } else if (strncmp(buf + 1, "Album:", 6) == 0) {   // id3v2
+                TFT.cls();
+                buf[n - 1] = 0;
+                i = printutf8(5, 30, buf + 10);
+                j = printutf8(5, 30 + (ft.getHeight() + 2) * i, title);
+                printutf8(5, 30 + (ft.getHeight() + 2) * (i + j), artist);
+                title[0] = 0;
+                artist[0] = 0;
             }
             n = 0;
             myled = 1;
