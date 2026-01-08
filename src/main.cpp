@@ -118,7 +118,7 @@ int main() {
             if (strncmp(buf, "ICY-META:", 9) == 0) {
                 TFT.cls();
                 buf[n - 3] = 0;
-                printutf8(5, 30, buf + 23);
+                printutf8(5, 5, buf + 23);
             } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // id3v2
                 buf[n - 1] = 0;
                 strcpy(title, buf + 10);
@@ -128,9 +128,9 @@ int main() {
             } else if (strncmp(buf + 1, "Album:", 6) == 0) {   // id3v2
                 TFT.cls();
                 buf[n - 1] = 0;
-                i = printutf8(5, 30, buf + 10);
-                j = printutf8(5, 30 + (ft.getHeight() + 2) * i, title);
-                printutf8(5, 30 + (ft.getHeight() + 2) * (i + j), artist);
+                i = printutf8(5, 5, buf + 10);
+                j = printutf8(5, 5 + (ft.getHeight() + 2) * i, title);
+                printutf8(5, 5 + (ft.getHeight() + 2) * (i + j), artist);
                 title[0] = 0;
                 artist[0] = 0;
             }
