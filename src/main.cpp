@@ -115,7 +115,8 @@ int main() {
         ch = USART.getc();
         if (ch == '\n') {
             buf[n] = 0;
-            if (strncmp(buf, "ICY-META:", 9) == 0) {
+            myled = 1;
+            if (strncmp(buf, "ICY-META:", 9) == 0 && buf[n - 2] == ';') {
                 TFT.cls();
                 buf[n - 3] = 0;
                 printutf8(5, 5, buf + 23);
@@ -135,12 +136,12 @@ int main() {
                 artist[0] = 0;
             }
             n = 0;
-            myled = 1;
-            wait(0.2);
             myled = 0;
         } else {
-            buf[n] = ch;
-            ++n;
+            if (n < sizeof(buf) - 1) {
+                buf[n] = ch;
+                ++n;
+            }
         }
     }
 }
