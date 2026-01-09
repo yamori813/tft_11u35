@@ -48,10 +48,15 @@ int printutf8(int _x, int _y, char *c)
     line = 0;
 
     for(k = 0;k < n; ++k) {
-        y = _y + (ft.getHeight() + 2) * line;
         byte buf[MAXFONTLEN]; 
-        ft.getFontData(buf,pUTF16[k]);        // フォントデータの取得
+        ft.getFontData(buf, pUTF16[k]);        // フォントデータの取得
         byte bn= ft.getRowLength();   // 1行当たりのバイト数取得
+        if (_x + off + ft.getWidth() > TFT.width() - 2) {
+            x = _x;
+            off = 0;
+            ++line;
+        }
+        y = _y + (ft.getHeight() + 2) * line;
 
         for (i = 0; i < ft.getLength(); i += bn ) {
             for (j = 0; j < bn; j++) {
@@ -60,13 +65,7 @@ int printutf8(int _x, int _y, char *c)
             x = _x;
             ++y;
         }
-        off += bn * 8;
-        if (_x + off > TFT.width() - ft.getWidth() - 2) {
-            x = _x;
-            y = _y;
-            off = 0;
-            ++line;
-        }
+        off += ft.getWidth();
     }
 
     return line + 1;
@@ -104,7 +103,7 @@ int main() {
     }
 
     char *c ="猫にコ・ン・バ・ン・ワさんの漢字フォントライブラリを利用してます。";
-    printutf8(5, 30, c);
+    printutf8(2, 30, c);
 
     int n = 0;
     char buf[1024];
@@ -119,7 +118,7 @@ int main() {
             if (strncmp(buf, "ICY-META:", 9) == 0 && buf[n - 2] == ';') {
                 TFT.cls();
                 buf[n - 3] = 0;
-                printutf8(5, 5, buf + 23);
+                printutf8(2, 2, buf + 23);
             } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // id3v2
                 if ((n - 10) < sizeof(title)) {
                     buf[n - 1] = 0;
@@ -134,9 +133,9 @@ int main() {
                 if (buf[n - 1] == '\r') {
                     TFT.cls();
                     buf[n - 1] = 0;
-                    i = printutf8(5, 5, buf + 10);
-                    j = printutf8(5, 5 + (ft.getHeight() + 2) * i, title);
-                    printutf8(5, 5 + (ft.getHeight() + 2) * (i + j), artist);
+                    i = printutf8(2, 2, title);
+                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 10);
+                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist);
                 }
                 title[0] = 0;
                 artist[0] = 0;
