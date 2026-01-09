@@ -57,14 +57,16 @@ int printutf8(int _x, int _y, char *c)
         }
         y = _y + (ft.getHeight() + 2) * line;
 
-        for (i = 0; i < ft.getLength(); i += bn ) {
-            for (j = 0; j < bn; j++) {
-                bitdisp(buf[i+j]);
+        if (!(off == 0 && pUTF16[k] == ' ')) {
+            for (i = 0; i < ft.getLength(); i += bn ) {
+                for (j = 0; j < bn; j++) {
+                    bitdisp(buf[i+j]);
+                }
+                x = _x;
+                ++y;
             }
-            x = _x;
-            ++y;
+            off += ft.getWidth();
         }
-        off += ft.getWidth();
     }
 
     return line + 1;
