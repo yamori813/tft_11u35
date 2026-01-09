@@ -271,9 +271,7 @@ char* exfonts::getFontData(byte* fontdata,char *pUTF8) {
     addr = _finfo[_fontNo].dat_addr + code * _finfo[_fontNo].b_num;
     
 //    n = W25Q64_fastread(addr, fontdata, _finfo[_fontNo].b_num);
-    for (n = 0; n <  _finfo[_fontNo].b_num; ++n) {
-        fontdata[n] = spi_mem->read8(addr + n);
-    }
+    n = spi_mem->readFREAD(addr, fontdata, _finfo[_fontNo].b_num);
     if (n != _finfo[_fontNo].b_num) 
       return false;
       

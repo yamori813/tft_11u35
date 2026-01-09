@@ -61,7 +61,7 @@ int printutf8(int _x, int _y, char *c)
             ++y;
         }
         off += bn * 8;
-        if (_x + off > 110) {
+        if (_x + off > TFT.width() - ft.getWidth() - 2) {
             x = _x;
             y = _y;
             off = 0;
