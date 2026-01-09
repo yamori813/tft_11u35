@@ -39,7 +39,6 @@ void bitdisp(uint8_t d) {
 int printutf8(int _x, int _y, char *c)
 {
     int i, j, k;
-    ft.setFontSize(EXFONT16);
     int n;
     uint16_t pUTF16[256];
     n = exfonts::Utf8ToUtf16(pUTF16, c);  // UTF8からUTF16に変換する
@@ -101,6 +100,8 @@ int main() {
         }
         TFT.character(0, 0, ' ');
     }
+
+    ft.setFontSize(EXFONT16);
 
     char *c ="猫にコ・ン・バ・ン・ワさんの漢字フォントライブラリを利用してます。";
     printutf8(2, 30, c);
