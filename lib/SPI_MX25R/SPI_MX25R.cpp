@@ -8,7 +8,7 @@
 
  
 SPI_MX25R::SPI_MX25R(PinName mosi, PinName miso, PinName sclk, PinName cs) :
-        m_spi(mosi, miso, sclk), m_cs(cs) { }
+        m_spi(mosi, miso, sclk), m_cs(cs) { m_spi.frequency(10000000); }
  
 SPI_MX25R::~SPI_MX25R() { }
  
