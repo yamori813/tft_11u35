@@ -111,6 +111,7 @@ int main() {
     int n = 0;
     char buf[1024];
     char ch;
+    char *stend;
     while(1) {
         if(!USART.readable())
             continue;
@@ -121,6 +122,9 @@ int main() {
             if (strncmp(buf, "ICY-META:", 9) == 0 && buf[n - 2] == ';') {
                 TFT.cls();
                 buf[n - 3] = 0;
+                stend = strchr(buf + 23, '\'');
+                if (stend)
+                  *stend = 0;
                 printutf8(2, 2, buf + 23);
             } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // id3v2
                 if ((n - 10) < sizeof(title)) {
