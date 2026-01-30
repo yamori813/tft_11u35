@@ -167,6 +167,10 @@ int main() {
                 eeprom.put(0, 'm');
                 eeprom.put(1, n - 6);
                 eeprom.write(2, buf + 5, n - 6);
+            } else if (strncmp(buf, "disp:", 5) == 0) {
+                TFT.cls();
+                buf[n - 1] = 0;
+                printutf8(2, 2, buf + 5, GreenYellow);
             }
             n = 0;
             myled = 0;
