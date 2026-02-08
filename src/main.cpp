@@ -143,22 +143,42 @@ int main() {
                 if (stend)
                   *stend = 0;
                 printutf8(2, 2, buf + 23, White);
-            } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // id3v2
+            } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // mpg123 id3v2
                 if ((n - 10) < sizeof(title)) {
                     buf[n - 1] = 0;
                     strcpy(title, buf + 10);
                 }
-            } else if (strncmp(buf + 1, "Artist:", 7) == 0) {   // id3v2
+            } else if (strncmp(buf + 1, "Artist:", 7) == 0) {   // mpg123 id3v2
                 if ((n - 10) < sizeof(artist)) {
                     buf[n - 1] = 0;
                     strcpy(artist, buf + 10);
                 }
-            } else if (strncmp(buf + 1, "Album:", 6) == 0) {   // id3v2
+            } else if (strncmp(buf + 1, "Album:", 6) == 0) {   // mpg123 id3v2
                 if (buf[n - 1] == '\r') {
                     TFT.cls();
                     buf[n - 1] = 0;
                     i = printutf8(2, 2, title, White);
                     j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 10, White);
+                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, White);
+                }
+                title[0] = 0;
+                artist[0] = 0;
+            } else if (strncmp(buf, "title=", 6) == 0) {   // shairport
+                if ((n - 6) < sizeof(title)) {
+                    buf[n - 1] = 0;
+                    strcpy(title, buf + 6);
+                }
+            } else if (strncmp(buf, "artist=", 7) == 0) {   // shairport
+                if ((n - 7) < sizeof(artist)) {
+                    buf[n - 1] = 0;
+                    strcpy(artist, buf + 7);
+                }
+            } else if (strncmp(buf, "album=", 6) == 0) {   // shairport
+                if (buf[n - 1] == '\r') {
+                    TFT.cls();
+                    buf[n - 1] = 0;
+                    i = printutf8(2, 2, title, White);
+                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 6, White);
                     printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, White);
                 }
                 title[0] = 0;
