@@ -157,9 +157,9 @@ int main() {
                 if (buf[n - 1] == '\r') {
                     TFT.cls();
                     buf[n - 1] = 0;
-                    i = printutf8(2, 2, title, White);
-                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 10, White);
-                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, White);
+                    i = printutf8(2, 2, title, Green);
+                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 10, Green);
+                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, Green);
                 }
                 title[0] = 0;
                 artist[0] = 0;
@@ -177,9 +177,9 @@ int main() {
                 if (buf[n - 1] == '\r') {
                     TFT.cls();
                     buf[n - 1] = 0;
-                    i = printutf8(2, 2, title, White);
-                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 6, White);
-                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, White);
+                    i = printutf8(2, 2, title, Orange);
+                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 6, Orange);
+                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, Orange);
                 }
                 title[0] = 0;
                 artist[0] = 0;
