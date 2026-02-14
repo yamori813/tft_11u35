@@ -139,7 +139,7 @@ int main() {
             if (strncmp(buf, "ICY-META:", 9) == 0 && buf[n - 2] == ';') {
                 TFT.cls();
                 buf[n - 3] = 0;
-                stend = strchr(buf + 23, '\'');
+                stend = strstr(buf + 23, "\';");
                 if (stend)
                   *stend = 0;
                 printutf8(2, 2, buf + 23, DarkGreen);
