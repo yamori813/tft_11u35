@@ -142,7 +142,7 @@ int main() {
                 stend = strchr(buf + 23, '\'');
                 if (stend)
                   *stend = 0;
-                printutf8(2, 2, buf + 23, White);
+                printutf8(2, 2, buf + 23, DarkGreen);
             } else if (strncmp(buf + 1, "Title:", 6) == 0) {   // mpg123 id3v2
                 if ((n - 10) < sizeof(title)) {
                     buf[n - 1] = 0;
@@ -190,7 +190,7 @@ int main() {
             } else if (strncmp(buf, "disp:", 5) == 0) {
                 TFT.cls();
                 buf[n - 1] = 0;
-                printutf8(2, 2, buf + 5, GreenYellow);
+                printutf8(2, 2, buf + 5, White);
             }
             n = 0;
             myled = 0;
