@@ -193,7 +193,7 @@ int main() {
             } else if (strncmp(buf, "disp:", 5) == 0) {
                 TFT.cls();
                 buf[n - 1] = 0;
-                printutf8(2, 2, buf + 5, White);
+                printutf8(2, 2, buf + 5, Black);
             }
             n = 0;
             myled = 0;
