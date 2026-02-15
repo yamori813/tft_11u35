@@ -90,6 +90,9 @@ int main() {
 
     ft.init(spi_mem);
 
+    // cream yellow
+    TFT.background(RGB(255, 237, 179));
+
     TFT.cls();
 
 #ifdef DEBUG
