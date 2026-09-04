@@ -78,12 +78,14 @@ int printutf8(int _x, int _y, char *c, short color)
 }
  
 int main() {
-    int i, j;
+    int i, j, k, t;
     int n = 0;
     char ch;
     char *stend;
     char title[128];
     char artist[128];
+    char album[128];
+    char time[16];
     char buf[1024];
 
     USART.baud(115200);
@@ -177,13 +179,26 @@ int main() {
                     strcpy(artist, buf + 7);
                 }
             } else if (strncmp(buf, "album=", 6) == 0) {   // shairport
-                if (buf[n - 1] == '\r') {
+                if ((n - 6) < sizeof(album)) {
+                    buf[n - 1] = 0;
+                    strcpy(album, buf + 6);
+                }
+            } else if (strncmp(buf, "time=", 5) == 0) {   // shairport
+//                if (buf[n - 1] == '\r') {
                     TFT.cls();
                     buf[n - 1] = 0;
                     i = printutf8(2, 2, title, Orange);
-                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, buf + 6, Orange);
-                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, Orange);
-                }
+                    j = printutf8(2, 2 + (ft.getHeight() + 2) * i, album, Orange);
+                    k = printutf8(2, 2 + (ft.getHeight() + 2) * (i + j), artist, Orange);
+                    t = atoi(buf + 5);
+                    t = (t + 500) / 1000;
+                    if (t > 3600)
+                        sprintf(time, "%02d:%02d:%02d", t / 3600,
+                            (t % 3600) / 60, (t % 3600) % 60);
+                    else
+                        sprintf(time, "%02d:%02d", t / 60, t % 60);
+                    printutf8(2, 2 + (ft.getHeight() + 2) * (i + j + k), time, Orange);
+//                }
                 title[0] = 0;
                 artist[0] = 0;
             } else if (strncmp(buf, "memo:", 5) == 0) {
